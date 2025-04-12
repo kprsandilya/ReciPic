@@ -1,3 +1,9 @@
 mobile/ScannerApp/node_modules
+mobile/ScannerApp/firebase.ts
 
 
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+storage.rules

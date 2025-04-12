@@ -45,6 +45,7 @@ export default function LoginScreen() {
       await createUserWithEmailAndPassword(auth, email, password);
       router.push("./upload");
     } catch (error) {
+      console.error('Signup Error: ', error);
       Alert.alert("Signup failed", (error as any)?.message || "");
     }
   };
@@ -88,6 +89,8 @@ export default function LoginScreen() {
             placeholder="Email ID"
             style={{ flex: 1, paddingVertical: 0 }}
             keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
         <View
@@ -108,13 +111,15 @@ export default function LoginScreen() {
             placeholder="Password"
             style={{ flex: 1, paddingVertical: 0 }}
             secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
           />
 
         </View>
-        <TouchableOpacity onPress={() => {}} style={{backgroundColor: '#eed365', padding: 20, borderRadius:10, marginBottom:30}}>
+        <TouchableOpacity onPress={(login)} style={{backgroundColor: '#eed365', padding: 20, borderRadius:10, marginBottom:30}}>
             <Text style={{textAlign:'center', fontWeight:'700', fontSize:16, color:'#fff'}}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("/RegisterScreen")} style={{backgroundColor: '#eed365', padding: 20, borderRadius:10, marginBottom:30}}>
+        <TouchableOpacity onPress={(signup)} style={{backgroundColor: '#eed365', padding: 20, borderRadius:10, marginBottom:30}}>
             <Text style={{textAlign:'center', fontWeight:'700', fontSize:16, color:'#fff'}}>Register</Text>
         </TouchableOpacity>
       </View>

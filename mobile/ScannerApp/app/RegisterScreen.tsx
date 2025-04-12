@@ -110,7 +110,7 @@ export default function RegisterScreen({navigation}: RegisterScreenProps) {
           />
 
         </View>
-        <TouchableOpacity onPress={() => router.back()} style={{backgroundColor: '#eed365', padding: 20, borderRadius:10, marginBottom:30}}>
+        <TouchableOpacity onPress={(signup) => router.back()} style={{backgroundColor: '#eed365', padding: 20, borderRadius:10, marginBottom:30}}>
             <Text style={{textAlign:'center', fontWeight:'700', fontSize:16, color:'#fff'}}>Register</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{backgroundColor: '#eed365', padding: 20, borderRadius:10, marginBottom:30}}>

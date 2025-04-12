@@ -23,6 +23,7 @@ export default function AuthStack() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="RegisterScreen" />
       <Stack.Screen name="LoginScreen" />
+      
     </Stack>
   );
 }
