@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "ReciPic",
+    "version": "1.0.0",
+    "description": "Take images of your fridge and find a nice recipe to make!",
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "permissions": ["scripting", "activeTab"]
+
+
+    
+}
