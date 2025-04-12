@@ -4,6 +4,7 @@ import {
   Image,
   Text,
   View,
+  ScrollView,
   TextInput,
   Button,
   Alert,
