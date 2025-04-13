@@ -1,6 +1,6 @@
 import requests
 from google import genai
-from flask import Flask
+from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 import os
 import re
@@ -12,6 +12,12 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 images = ["spinach", "pineapple"]
 
 app = Flask(__name__)
+
+# Define an upload folder where files will be saved
+UPLOAD_FOLDER = './backend/app/uploads'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def get_objects(image_name):
     url = "http://128.211.134.20:8000/infer"
@@ -70,5 +76,23 @@ def gen_recipe_test():
         json_content = json.load(file)
 
     return json_content
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    # Check if a file is present in the request
+    if 'photo' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+
+    file = request.files['photo']
+
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    # Save the file
+    save_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(save_path)
+
+    return jsonify({"message": "File uploaded successfully", "path": save_path}), 200
+
 
 print(gen_recipe_test())
