@@ -66,7 +66,7 @@ def gen_recipe():
 
 @app.route('/recipe_test', methods=['POST', 'GET'])
 def gen_recipe_test():
-    with open("data.json", 'r') as file:
+    with open("../../data.json", 'r') as file:
         json_content = json.load(file)
 
     return json_content
