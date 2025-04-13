@@ -28,7 +28,7 @@ export default function CameraFunction() {
   const [facing, setFacing] = useState("back");
   const [photo, setPhoto] = useState(); //After picture is taken this state will be updated with the picture
   const [video, setVideo] = useState(); //After video is recorded this state will be updated
-  const [flashMode, setFlashMode] = useState("on"); //Camera Flash will be ON by default
+  const [flashMode, setFlashMode] = useState("off"); //Camera Flash will be ON by default
   const [recording, setRecording] = useState(false); //State will be true when the camera will be recording
   const [zoom, setZoom] = useState(0); //State to control the digital zoom
   let cameraRef = useRef(); //Creates a ref object and assigns it to the variable cameraRef.
@@ -288,7 +288,7 @@ export default function CameraFunction() {
           </TouchableOpacity> */}
           <TouchableOpacity style={styles.button} onPress={toggleFlash}>
             <Text>
-              {flashMode === "off" ? (
+              {flashMode === "on" ? (
                 <Ionicons name="flash-outline" size={20} color="white" />
               ) : (
                 <Ionicons name="flash-off-outline" size={20} color="white" />

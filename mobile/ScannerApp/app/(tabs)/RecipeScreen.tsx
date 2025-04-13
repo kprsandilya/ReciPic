@@ -18,7 +18,7 @@ export default function RecipesScreen() {
 
    return (
        <View style={styles.container}>
-           <Text style={styles.title}>Ingredients</Text>
+           <Text style={styles.title}>recipesData.dish</Text>
            <FlatList
                data={ingredients}
                keyExtractor={(item, index) => index.toString()}
@@ -26,6 +26,10 @@ export default function RecipesScreen() {
                    <Text style={styles.recipeItem}>{item}</Text>
                )}
            />
+           <Text style={styles.container}>Recipe</Text>
+           <Text>
+            recipesData.recipe
+           </Text>
        </View>
    );
 }
