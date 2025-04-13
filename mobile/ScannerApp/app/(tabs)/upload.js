@@ -14,6 +14,8 @@ import { useNavigation } from "@react-navigation/native";
 import * as MediaLibrary from "expo-media-library";
 import Slider from "@react-native-community/slider";
 import * as FileSystem from 'expo-file-system';
+import { storage } from '../../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
 export default function CameraFunction() {
@@ -83,37 +85,6 @@ export default function CameraFunction() {
     setPhoto(newPhoto); //Update photo state with the new photo object
   };
 
-  async function uploadPhotoToFlask(photoUri) {
-    // Extract the file name from the URI
-    const filename = photoUri.split('/').pop();
-  
-    // Determine the file type from the file extension
-    const match = /\.(\w+)$/.exec(filename);
-    const type = match ? `image/${match[1]}` : `image`;
-  
-    // Create a FormData object and append the photo
-    const formData = new FormData();
-    formData.append('photo', {
-      uri: photoUri,
-      name: filename,
-      type: type,
-    });
-  
-    try {
-      // Replace 'http://your-flask-backend-ip:port/upload' with your actual Flask endpoint URL.
-      const response = await fetch('http://your-flask-backend-ip:port/upload', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      const responseJson = await response.json();
-      console.log("Upload response:", responseJson);
-    } catch (error) {
-      console.error("Upload error:", error);
-    }
-  }
 
   // async function savePhotoToLocalDirectory(photoUri) {
   //   // Extract the file name from the URI.
@@ -144,7 +115,7 @@ export default function CameraFunction() {
   //   return newPath;
   // }
 
-  async function uploadPhotoToFlask(photoUri) {
+  /*async function uploadPhotoToFlask(photoUri) {
     // Extract the file name from the URI
     const filename = photoUri.split('/').pop();
   
@@ -162,7 +133,7 @@ export default function CameraFunction() {
   
     try {
       // Replace 'http://your-flask-backend-ip:port/upload' with your actual Flask endpoint URL.
-      const response = await fetch('http://localhost::5000', {
+      const response = await fetch('http://localhost:5000/upload', {
         method: 'POST',
         body: formData,
         headers: {
@@ -174,7 +145,27 @@ export default function CameraFunction() {
     } catch (error) {
       console.error("Upload error:", error);
     }
-  }
+  }*/
+
+
+    async function uploadPhotoToFirebase(photoUri) {
+      try {
+        const response = await fetch(photoUri);
+        const blob = await response.blob();
+    
+        const filename = photoUri.split('/').pop() || `photo-${Date.now()}.jpg`;
+        const storageRef = ref(storage, `photos/${filename}`);
+    
+        await uploadBytes(storageRef, blob);
+        const downloadURL = await getDownloadURL(storageRef);
+    
+        console.log('Uploaded successfully! Download URL:', downloadURL);
+        return downloadURL;
+      } catch (error) {
+        console.error('Firebase upload error:', error);
+      }
+    }
+  
   
 
   //After the picture is captured it will be displayed to the user and the user will also be provided the option to save or discard the image
@@ -186,7 +177,7 @@ export default function CameraFunction() {
     // };
     let savePhoto = async () => {
       try {
-        const newPath = await uploadPhotoToFlask(photo.uri);
+        const newPath = await uploadPhotoToFirebase(photo.uri);
         // Optionally, you can show a message or further process newPath
         setPhoto(null);
       } catch (error) {

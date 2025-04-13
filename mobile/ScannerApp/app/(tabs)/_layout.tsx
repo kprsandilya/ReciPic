@@ -17,15 +17,6 @@ export default function TabLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="upload"
         options={{
           title: "Upload",
@@ -40,6 +31,15 @@ export default function TabLayout() {
           title: "Recipes",
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="restaurant-menu" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Settings"
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings" size={size} color={color} />
           ),
         }}
       />
