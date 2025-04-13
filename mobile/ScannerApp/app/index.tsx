@@ -49,7 +49,9 @@ export default function HomeScreen() {
       </ThemedView>
     </ParallaxScrollView>
   );*/
-  return <Redirect href="/LoginScreen" />;
+
+  /*return <Redirect href="/LoginScreen" />;*/
+  return
 }
 
 const styles = StyleSheet.create({

@@ -15,8 +15,8 @@ const firebaseConfig = {
   projectId: "recipic-3e67f",
   storageBucket: "recipic-3e67f.firebasestorage.app",
   messagingSenderId: "41746715043",
-  appId: "1:41746715043:web:c800e0e470003f68854a16",
-  measurementId: "G-0WNS3Q4EQJ"
+  appId: "1:41746715043:web:6825c739711704cb854a16",
+  measurementId: "G-7H174K1WJ0"
 };
 
 // Initialize Firebase
