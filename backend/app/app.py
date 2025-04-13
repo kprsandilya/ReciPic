@@ -103,6 +103,15 @@ def gen_recipe():
 
     return jsonify(returned), 200
 
+@app.route("/update")
+def update():
+    userinfo = request.get_json(force=True)
+    with open('../../extension/data.json', 'w') as fp:
+        json.dump(userinfo, fp)
+
+    with open('../../mobile/ScannerApp/data.json', 'w') as fp:
+        json.dump(userinfo, fp)
+
 @app.route('/recipe_test', methods=['POST', 'GET'])
 def gen_recipe_test():
     with open("../../data.json", 'r') as file:
