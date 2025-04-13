@@ -17,6 +17,7 @@ import * as FileSystem from 'expo-file-system';
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
+import { useRouter } from "expo-router"
 
 
 export default function CameraFunction() {
@@ -32,6 +33,7 @@ export default function CameraFunction() {
   const [zoom, setZoom] = useState(0); //State to control the digital zoom
   let cameraRef = useRef(); //Creates a ref object and assigns it to the variable cameraRef.
   const navigation = useNavigation();
+  const router = useRouter();
 
   //When the screen is rendered initially the use effect hook will run and check if permission is granted to the app to access the Camera, Microphone and Media Library.
   useEffect(() => {
@@ -250,9 +252,9 @@ export default function CameraFunction() {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => setCameraMode("picture")}
+            onPress={() => router.replace("./RecipeScreen")}
           >
-            <Ionicons name="camera-outline" size={20} color="white" />
+            <Ionicons name="sync" size={20} color="white" />
           </TouchableOpacity>
           {/* <TouchableOpacity
             style={styles.button}
