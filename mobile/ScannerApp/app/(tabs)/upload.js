@@ -125,7 +125,7 @@ export default function CameraFunction() {
       // Replace 'http://your-flask-backend-ip:port/upload' with your actual Flask endpoint URL.
       const response = await fetch('http://10.186.175.219:5000/upload', {
         method: 'POST',
-        body: userIdentifier,
+        body: JSON.stringify({ userIdentifier }),
         headers: {
           'Content-Type': 'application/json',
         },
