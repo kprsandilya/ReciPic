@@ -1,5 +1,5 @@
 import requests
-from google import genai
+import google.generativeai as genai
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 import os
@@ -7,7 +7,9 @@ import re
 import json
 
 load_dotenv()
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+#client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 images = ["spinach", "pineapple"]
 
@@ -98,6 +100,8 @@ def upload_file():
     file.save(save_path)
 
     return jsonify({"message": "File uploaded successfully", "path": save_path}), 200
+
+home()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
