@@ -18,7 +18,7 @@ def get_objects(image_name):
 
     image_name = f"{image_name}.jpg"
 
-    files = {'file': open(f"backend/images/{image_name}", "rb")}
+    files = {'file': open(f"../images/{image_name}", "rb")}
 
     response = requests.post(url, files=files)
 
