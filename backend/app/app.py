@@ -91,6 +91,12 @@ def gen_recipe():
 
     clear_images()
 
+    with open('../../extension/data.json', 'w') as fp:
+        json.dump(returned, fp)
+
+    with open('../../mobile/data.json', 'w') as fp:
+        json.dump(returned, fp)
+
     return jsonify(returned), 200
 
 @app.route('/recipe_test', methods=['POST', 'GET'])
