@@ -94,7 +94,7 @@ def gen_recipe():
     with open('../../extension/data.json', 'w') as fp:
         json.dump(returned, fp)
 
-    with open('../../mobile/data.json', 'w') as fp:
+    with open('../../mobile/ScannerApp/data.json', 'w') as fp:
         json.dump(returned, fp)
 
     return jsonify(returned), 200
