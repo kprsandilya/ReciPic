@@ -49,6 +49,7 @@ export default function HomeScreen() {
       </ThemedView>
     </ParallaxScrollView>
   );*/
+
   return <Redirect href="/LoginScreen" />;
 }
 

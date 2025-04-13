@@ -1,5 +1,6 @@
 mobile/ScannerApp/node_modules
 mobile/ScannerApp/firebase.ts
+mobile/ScannerApp/apikey.ts
 
 
 .firebaserc

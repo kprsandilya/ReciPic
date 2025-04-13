@@ -35,7 +35,7 @@ export default function LoginScreen() {
   const login = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("./upload");
+      router.replace("./(tabs)/RecipeScreen");
     } catch (error) {
       Alert.alert("Login failed", (error as any)?.message || "");
     }
@@ -44,7 +44,7 @@ export default function LoginScreen() {
   const signup = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      router.push("./upload");
+      router.replace("./(tabs)/RecipeScreen");
     } catch (error) {
       console.error('Signup Error: ', error);
       Alert.alert("Signup failed", (error as any)?.message || "");
