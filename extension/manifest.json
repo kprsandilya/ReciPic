@@ -7,6 +7,12 @@
         "default_popup": "popup.html",
         "default_image": "banana.png"
     },
+    "web_accessible_resoucres": [
+        {
+            "resources": ["data.json"],
+            "matches": ["<all_urls>"]
+        }
+    ], 
     "permissions": ["scripting", "activeTab"],
     "host_permissions": [
         "https://www.walmart.com/*"

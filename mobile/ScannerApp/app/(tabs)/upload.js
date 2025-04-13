@@ -288,7 +288,7 @@ export default function CameraFunction() {
           </TouchableOpacity> */}
           <TouchableOpacity style={styles.button} onPress={toggleFlash}>
             <Text>
-              {flashMode === "on" ? (
+              {flashMode === "off" ? (
                 <Ionicons name="flash-outline" size={20} color="white" />
               ) : (
                 <Ionicons name="flash-off-outline" size={20} color="white" />
