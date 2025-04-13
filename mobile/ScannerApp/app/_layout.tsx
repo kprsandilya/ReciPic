@@ -44,7 +44,6 @@ export default function RootLayout() {
 
 }
 
-/*
 <Tabs.Screen
   name="recipes"
   options={{
@@ -54,4 +53,3 @@ export default function RootLayout() {
     ),
   }}
   />
-*/
