@@ -81,6 +81,10 @@ def gen_recipe():
 
         cleaned_text = re.sub(r'```json\s*[\s\S]*?```', '', response.text).strip()
 
+        match = re.search(r"\*\*(.+?)\*\*", cleaned_text)
+        title = match.group(1)
+
+        returned['dish'] = title
         returned['recipe'] = cleaned_text
         returned['ingredients'] = ingredients
         returned['unowned ingredients'] = dont_have_ing
