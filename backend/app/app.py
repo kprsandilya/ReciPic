@@ -58,6 +58,14 @@ def gen_recipe():
         "```json\n[\"ingredient1\", \"ingredient2\", ...]\n```"
     )
 
+    userinfo = request.get_json(force=True)
+    userid = userinfo['userIdentifier']
+    bucket = storage.bucket()
+    blobs = bucket.list_blobs()
+    for blob in bucket.list_blobs():
+        if userid in blob.name:
+            blob.delete()
+
     model = genai.GenerativeModel("gemini-2.0-flash")
 
     response = model.generate_content(prompt)
@@ -81,6 +89,8 @@ def gen_recipe():
     else:
         print("No JSON block found.")
 
+    clear_images()
+
     return jsonify(returned), 200
 
 @app.route('/recipe_test', methods=['POST', 'GET'])
@@ -88,7 +98,7 @@ def gen_recipe_test():
     with open("../../data.json", 'r') as file:
         json_content = json.load(file)
 
-    return json_content
+    return json_content, 200
 
 @app.route('/')
 def home():

@@ -74,6 +74,30 @@ export default function CameraFunction() {
     setFlashMode((current) => (current === "on" ? "off" : "on"));
   }
 
+  //Function to run the model on given ingredients
+  async function runIng() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const userIdentifier = user.email.replace(/[^a-zA-Z0-9]/g, "_"); // sanitize email
+
+    try {
+      // Replace 'http://your-flask-backend-ip:port/upload' with your actual Flask endpoint URL.
+      const response = await fetch('http://10.186.175.219:5000/recipe', {
+        method: 'POST',
+        body: JSON.stringify({ userIdentifier }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const responseJson = await response.json();
+      console.log("Upload response:", responseJson);
+    } catch (error) {
+      console.error("Upload error:", error);
+    }
+
+    router.replace("./RecipeScreen")
+  }
+
   //Function to capture picture
   let takePic = async () => {
     //Declares takePic as an asynchronous function using the async keyword.
@@ -174,7 +198,7 @@ export default function CameraFunction() {
     // };
     let savePhoto = async () => {
       try {
-        //const newPath = await uploadPhotoToFirebase(photo.uri);
+        const newPath = await uploadPhotoToFirebase(photo.uri);
         uploadPhotoToFlask("set")
         // Optionally, you can show a message or further process newPath
         setPhoto(null);
@@ -252,7 +276,7 @@ export default function CameraFunction() {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => router.replace("./RecipeScreen")}
+            onPress={runIng}
           >
             <Ionicons name="sync" size={20} color="white" />
           </TouchableOpacity>
