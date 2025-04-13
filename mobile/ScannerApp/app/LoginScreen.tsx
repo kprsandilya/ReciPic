@@ -35,7 +35,7 @@ export default function LoginScreen() {
   const login = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("./upload");
+      router.push("./RecipeScreen");
     } catch (error) {
       Alert.alert("Login failed", (error as any)?.message || "");
     }
