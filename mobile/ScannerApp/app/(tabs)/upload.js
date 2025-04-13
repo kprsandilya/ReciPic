@@ -162,7 +162,7 @@ export default function CameraFunction() {
   
     try {
       // Replace 'http://your-flask-backend-ip:port/upload' with your actual Flask endpoint URL.
-      const response = await fetch('http://your-flask-backend-ip:port/upload', {
+      const response = await fetch('http://localhost::5000', {
         method: 'POST',
         body: formData,
         headers: {
@@ -186,7 +186,7 @@ export default function CameraFunction() {
     // };
     let savePhoto = async () => {
       try {
-        const newPath = await savePhotoToLocalDirectory(photo.uri);
+        const newPath = await uploadPhotoToFlask(photo.uri);
         // Optionally, you can show a message or further process newPath
         setPhoto(null);
       } catch (error) {
