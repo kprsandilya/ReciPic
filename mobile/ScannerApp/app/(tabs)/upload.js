@@ -13,6 +13,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import * as MediaLibrary from "expo-media-library";
 import Slider from "@react-native-community/slider";
+import * as FileSystem from 'expo-file-system';
+
 
 export default function CameraFunction() {
   const [cameraPermission, setCameraPermission] = useState(); //State variable for camera permission
@@ -80,31 +82,98 @@ export default function CameraFunction() {
     //Captures an image with the specified options and returns a promise that resolves to an object containing: URI and Base64 string and/or EXIF data, based on the provided options.
     setPhoto(newPhoto); //Update photo state with the new photo object
   };
-  async function savePhotoToLocalDirectory(photoUri) {
-    // Extract the file name from the URI.
-    const fileName = photoUri.split('/').pop();
-    
-    // Define the destination directory.
-    // FileSystem.documentDirectory is a sandboxed directory for your app.
-    const folderUri = FileSystem.documentDirectory + "MyPhotos/";
+
+  async function uploadPhotoToFlask(photoUri) {
+    // Extract the file name from the URI
+    const filename = photoUri.split('/').pop();
   
-    // Check if the folder exists; if not, create it.
-    const folderInfo = await FileSystem.getInfoAsync(folderUri);
-    if (!folderInfo.exists) {
-      await FileSystem.makeDirectoryAsync(folderUri, { intermediates: true });
-    }
+    // Determine the file type from the file extension
+    const match = /\.(\w+)$/.exec(filename);
+    const type = match ? `image/${match[1]}` : `image`;
   
-    // Define the new file path.
-    const newPath = folderUri + fileName;
-  
-    // Copy the file from the temporary location to the new directory.
-    await FileSystem.copyAsync({
-      from: photoUri,
-      to: newPath,
+    // Create a FormData object and append the photo
+    const formData = new FormData();
+    formData.append('photo', {
+      uri: photoUri,
+      name: filename,
+      type: type,
     });
   
-    console.log("Photo saved to:", newPath);
-    return newPath;
+    try {
+      // Replace 'http://your-flask-backend-ip:port/upload' with your actual Flask endpoint URL.
+      const response = await fetch('http://your-flask-backend-ip:port/upload', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      const responseJson = await response.json();
+      console.log("Upload response:", responseJson);
+    } catch (error) {
+      console.error("Upload error:", error);
+    }
+  }
+
+  // async function savePhotoToLocalDirectory(photoUri) {
+  //   // Extract the file name from the URI.
+  //   const fileName = photoUri.split('/').pop();
+    
+  //   // Define the destination directory.
+  //   // FileSystem.documentDirectory is a sandboxed directory for your app.
+  //   // const folderUri = FileSystem.documentDirectory + "MyPhotos/";
+  //   const folderUri = FileSystem.documentDirectory + "ingredients/";
+
+  
+  //   // Check if the folder exists; if not, create it.
+  //   const folderInfo = await FileSystem.getInfoAsync(folderUri);
+  //   if (!folderInfo.exists) {
+  //     await FileSystem.makeDirectoryAsync(folderUri, { intermediates: true });
+  //   }
+  
+  //   // Define the new file path.
+  //   const newPath = folderUri + fileName;
+  
+  //   // Copy the file from the temporary location to the new directory.
+  //   await FileSystem.copyAsync({
+  //     from: photoUri,
+  //     to: newPath,
+  //   });
+  
+  //   console.log("Photo saved to:", newPath);
+  //   return newPath;
+  // }
+
+  async function uploadPhotoToFlask(photoUri) {
+    // Extract the file name from the URI
+    const filename = photoUri.split('/').pop();
+  
+    // Determine the file type from the file extension
+    const match = /\.(\w+)$/.exec(filename);
+    const type = match ? `image/${match[1]}` : `image`;
+  
+    // Create a FormData object and append the photo
+    const formData = new FormData();
+    formData.append('photo', {
+      uri: photoUri,
+      name: filename,
+      type: type,
+    });
+  
+    try {
+      // Replace 'http://your-flask-backend-ip:port/upload' with your actual Flask endpoint URL.
+      const response = await fetch('http://your-flask-backend-ip:port/upload', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      const responseJson = await response.json();
+      console.log("Upload response:", responseJson);
+    } catch (error) {
+      console.error("Upload error:", error);
+    }
   }
   
 
