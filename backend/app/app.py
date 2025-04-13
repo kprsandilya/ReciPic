@@ -16,12 +16,6 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Define an upload folder where files will be saved
-UPLOAD_FOLDER = './backend/app/uploads'
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 def get_objects(image_name):
     url = "http://128.211.134.20:8000/infer"
 
@@ -88,6 +82,7 @@ def home():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     print(request)
+    print("SIGNAL FROM UPLOAD")
 
     # Check if a file is present in the request
     if 'photo' not in request.files:
