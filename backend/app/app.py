@@ -15,10 +15,13 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 cred = credentials.Certificate(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'recipic-2.appspot.com'
+    'storageBucket': "recipic-2.firebasestorage.app"
 })
 
 bucket = storage.bucket()
+
+# List all files in the bucket
+blobs = bucket.list_blobs()
 for blob in bucket.list_blobs():
     print(blob.name)
 
