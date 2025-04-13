@@ -16,6 +16,7 @@ import Slider from "@react-native-community/slider";
 import * as FileSystem from 'expo-file-system';
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getAuth } from 'firebase/auth';
 
 
 export default function CameraFunction() {
@@ -146,7 +147,7 @@ export default function CameraFunction() {
       console.error("Upload error:", error);
     }
   }*/
-
+  
 
     async function uploadPhotoToFirebase(photoUri) {
       try {
@@ -154,8 +155,13 @@ export default function CameraFunction() {
         const blob = await response.blob();
     
         const filename = photoUri.split('/').pop() || `photo-${Date.now()}.jpg`;
-        const storageRef = ref(storage, `photos/${filename}`);
+        //const storageRef = ref(storage, `photos/${auth.currentUser.email}/${filename}`);
     
+        const auth = getAuth();
+        const user = auth.currentUser;
+        const userIdentifier = user.email.replace(/[^a-zA-Z0-9]/g, "_"); // sanitize email
+        const storageRef = ref(storage, `photos/${userIdentifier}/${filename}`);
+
         await uploadBytes(storageRef, blob);
         const downloadURL = await getDownloadURL(storageRef);
     
