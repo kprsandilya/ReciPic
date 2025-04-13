@@ -117,12 +117,15 @@ export default function CameraFunction() {
   // }
 
   async function uploadPhotoToFlask(string) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const userIdentifier = user.email.replace(/[^a-zA-Z0-9]/g, "_"); // sanitize email
 
     try {
       // Replace 'http://your-flask-backend-ip:port/upload' with your actual Flask endpoint URL.
       const response = await fetch('http://10.186.175.219:5000/upload', {
         method: 'POST',
-        body: string,
+        body: userIdentifier,
         headers: {
           'Content-Type': 'application/json',
         },

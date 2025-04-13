@@ -9,5 +9,6 @@ firestore.indexes.json
 firestore.rules
 storage.rules
 
+private.json
 
 .env

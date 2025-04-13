@@ -5,11 +5,22 @@ from dotenv import load_dotenv
 import os
 import re
 import json
+import firebase_admin
+from firebase_admin import credentials, firestore, auth, storage
 
 load_dotenv()
-#client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
+cred = credentials.Certificate(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
+firebase_admin.initialize_app(cred, {
+    'storageBucket': 'recipic-2.appspot.com'
+})
+
+bucket = storage.bucket()
+for blob in bucket.list_blobs():
+    print(blob.name)
 
 images = ["spinach", "pineapple"]
 
@@ -84,22 +95,10 @@ def home():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     print(request)
-    print("SIGNAL FROM UPLOAD")
-
-    # Check if a file is present in the request
-    if 'photo' not in request.files:
-        return jsonify({"error": "No file part"}), 400
-
-    file = request.files['photo']
-
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-
-    # Save the file
-    save_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(save_path)
-
-    return jsonify({"message": "File uploaded successfully", "path": save_path}), 200
+    docs = db.collection("users").stream()
+    for doc in docs:
+        print(doc.id, doc.to_dict())
+    return jsonify({"message": "Test"}), 200
 
 home()
 
