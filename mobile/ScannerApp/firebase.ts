@@ -4,19 +4,20 @@ import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 import { getAnalytics } from "firebase/analytics";
+import { API_KEY } from "./apikey"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "ENTER API KEYYYY",
-  authDomain: "recipic-3e67f.firebaseapp.com",
-  projectId: "recipic-3e67f",
-  storageBucket: "recipic-3e67f.firebasestorage.app",
-  messagingSenderId: "41746715043",
-  appId: "1:41746715043:web:6825c739711704cb854a16",
-  measurementId: "G-7H174K1WJ0"
+  apiKey: API_KEY,
+  authDomain: "recipic-2.firebaseapp.com",
+  projectId: "recipic-2",
+  storageBucket: "recipic-2.firebasestorage.app",
+  messagingSenderId: "455127185820",
+  appId: "1:455127185820:web:055707f78d6ec9e406b059",
+  measurementId: "G-CLN5KBM090"
 };
 
 // Initialize Firebase
