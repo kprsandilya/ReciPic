@@ -11,7 +11,10 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 images = ["spinach", "pineapple"]
 
+from flask import Flask
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
 # Define an upload folder where files will be saved
 UPLOAD_FOLDER = './backend/app/uploads'
@@ -77,8 +80,15 @@ def gen_recipe_test():
 
     return json_content
 
-@app.route('/upload', methods=['POST'])
+@app.route('/')
+def home():
+    print("alskdjf")
+    return "hello world"
+
+@app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
+    print(request)
+
     # Check if a file is present in the request
     if 'photo' not in request.files:
         return jsonify({"error": "No file part"}), 400
@@ -94,5 +104,5 @@ def upload_file():
 
     return jsonify({"message": "File uploaded successfully", "path": save_path}), 200
 
-
-print(gen_recipe_test())
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
